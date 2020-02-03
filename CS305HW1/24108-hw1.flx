@@ -1,0 +1,66 @@
+%{
+int numberOfLines = 0;
+%}
+TOPEN \<
+TCLOSE \>
+TEND \<\/
+TSELF \/\>
+TCOURSE course
+TCLASS class
+TMEETING meeting
+TCONSTRAINT constraint
+TITEM item
+TNAME name=
+TCODE code=
+TINSTRUCTOR instructor=
+TTYPE type=
+TCRN crn=
+TSECTION section=
+TCAPACITY capacity=
+TSTART start=
+TEND_A end=
+TDAY day=
+TMON M
+TTUE T
+TWED W
+TTHU R
+TFRI F
+TNUM [1-9][0-9]*
+TSTRING (\"(\\.|[^"\\])*\")|(\’(\\.|[^’\\])*\’)
+TTIME ([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]
+
+%%
+\n numberOfLines++;
+{TOPEN} printf("%d %s\n", numberOfLines, "tOPEN");
+{TCLOSE} printf("%d %s\n", numberOfLines, "tCLOSE");
+{TEND} printf("%d %s\n", numberOfLines, "tTEND");
+{TSELF} printf("%d %s\n", numberOfLines, "tSELF");
+{TCOURSE} printf("%d %s\n", numberOfLines, "tCOURSE");
+{TCLASS} printf("%d %s\n", numberOfLines, "tCLASS");
+{TMEETING} printf("%d %s\n", numberOfLines, "tMEETING");
+{TCONSTRAINT} printf("%d %s\n", numberOfLines, "tCONSTRAINT");
+{TITEM} printf("%d %s\n", numberOfLines, "tITEM");
+{TNAME} printf("%d %s\n", numberOfLines, "tNAME");
+{TCODE} printf("%d %s\n", numberOfLines, "tCODE");
+{TINSTRUCTOR} printf("%d %s\n", numberOfLines, "tINSTRUCTOR");
+{TTYPE} printf("%d %s\n", numberOfLines, "tTYPE");
+{TCRN} printf("%d %s\n", numberOfLines, "tCRN");
+{TSECTION} printf("%d %s\n", numberOfLines, "tSECTION");
+{TCAPACITY} printf("%d %s\n", numberOfLines, "tCAPACITY");
+{TSTART} printf("%d %s\n", numberOfLines, "tSTART");
+{TEND_A} printf("%d %s\n", numberOfLines, "tEND_A");
+{TDAY} printf("%d %s\n", numberOfLines, "tDAY");
+{TMON} printf("%d %s\n", numberOfLines, "tMON");
+{TTUE} printf("%d %s\n", numberOfLines, "tTUE");
+{TWED} printf("%d %s\n", numberOfLines, "tWED");
+{TTHU} printf("%d %s\n", numberOfLines, "tTHU");
+{TFRI} printf("%d %s\n", numberOfLines, "tFRI");
+{TNUM} printf("%d %s (%s)\n", numberOfLines, "tNUM", yytext);
+{TSTRING} printf("%d %s (%s)\n", numberOfLines, "tSTRING", strtok(yytext, "\"’"));
+{TTIME} printf("%d %s (%s)\n", numberOfLines, "tTIME", yytext);
+" "
+%%
+main()
+{
+yylex();
+}
